@@ -29,6 +29,7 @@
     <li>The app is fully usable without an account; an account is optional and only used to sync your progress.</li>
     <li>Usage analytics (which screens and exercises are used): on Android <strong>off until you opt in</strong>, on iOS <strong>on until you switch it off</strong>. Either way you can change it at any time in the app under <em>Account → Usage analytics</em>.</li>
     <li>Payments are handled by Google Play or the Apple App Store — we never see your card details.</li>
+    <li>Your speech is recognised by your phone's own speech service (Google on Android, Apple on iOS); the app never records or uploads audio. In <em>Describe a picture</em>, the text of your answers goes to our server and to OpenAI, which writes the tutor's replies.</li>
   </ul>
 </div>
 
@@ -36,29 +37,33 @@
 <p>DasGo is developed by <strong>Andrii Udod</strong>, an independent developer based in Austria, who is the data controller for the processing described here. Contact: <a href="mailto:andriiudodwork@icloud.com">andriiudodwork@icloud.com</a>.</p>
 
 <h2>2. What data the app processes</h2>
-<p><strong>Without an account</strong>, your quiz settings, daily energy and practice statistics are stored <em>only on your device</em>. Nothing about you is sent to our servers.</p>
+<p><strong>Without an account</strong>, your settings, daily energy, practice statistics, saved words and exercise progress are stored <em>only on your device</em>. Nothing about you is sent to our servers, apart from what the spoken exercises and the picture tutor need (see below).</p>
 <p><strong>If you create an account</strong> (optional), we process:</p>
 <ul>
-  <li><strong>Email address and password</strong> (email sign-up) or your <strong>Google account's name and email</strong> (Google sign-in). Authentication is provided by Google Firebase; your password is never visible to us.</li>
+  <li><strong>Email address and password</strong> (email sign-up), your <strong>Google account's name and email</strong> (Google sign-in), or the <strong>email address Apple shares</strong> with Sign in with Apple, which may be Apple's private relay address if you choose Hide My Email. Authentication is provided by Google Firebase; your password is never visible to us.</li>
   <li><strong>A user ID</strong> that identifies your account.</li>
-  <li><strong>Synced app data</strong>: your quiz preferences (language, level, endings selection), energy count and practice statistics (streaks, accuracy, per-article results), stored in Google Cloud Firestore so your progress follows you across devices.</li>
+  <li><strong>Synced app data</strong>: your preferences (language, level, endings selection, flashcard limits, sound, voice and chosen tutor), energy count, practice statistics (streaks, XP, accuracy, per-article results, awards), your flashcard decks with the words you saved, and your progress in Dialogs, stored in Google Cloud Firestore so your progress follows you across devices.</li>
 </ul>
 <p><strong>If you buy a subscription</strong>, the purchase is processed by <strong>Google Play</strong> (Android) or the <strong>Apple App Store</strong> (iOS). We and our subscription-management provider <strong>RevenueCat</strong> receive purchase tokens, product and transaction information and pseudonymous identifiers needed to activate and validate your subscription. We never receive your payment card details.</p>
+<p><strong>If you use the spoken exercises</strong> (Dialogs, Say It Back, Describe a picture), the microphone is active only while you say a line, and your speech is turned into text by your phone's own speech recognition service: Google's on Android, Apple's on iOS. Depending on the device and the language packs installed, that service may process the audio on the device or on Google's or Apple's servers, under their own privacy policies; the system asks for your permission first. The app receives only the recognised text, which it uses to score the line. It never records, stores or uploads audio.</p>
+<p><strong>If you use Describe a picture</strong>, the text of each answer you give (recognised from your speech, or typed), the conversation so far, the picture and your app language are sent to our server (Google Cloud Functions) and from there to <strong>OpenAI</strong>, whose language model writes the tutor's reply, its translation and any correction. OpenAI processes this as our service provider under its API terms, which exclude using it to train its models; it may retain it briefly for abuse monitoring. The request carries your user ID (or, for a guest, an anonymous app identifier), which our server uses to check your plan with RevenueCat and to count your conversations; your name and email are not sent. The tutor's spoken replies are generated with Google Cloud Text-to-Speech and cached on our servers by their text alone, not linked to you. Our server keeps per-user counters (conversations and answers today and this month, and their cost) and a log of each turn's timing, model and cost; none of this contains the text of your answers. The conversation transcript itself is stored <em>only on your device</em>; only the words you choose to save go into your synced flashcard deck.</p>
 <p><strong>Usage analytics.</strong> Google Firebase Analytics collects usage events (for example screens viewed, an exercise started or completed, a subscription bought), an app-instance identifier, your account's user ID if you are signed in, device model, operating system version and coarse location (country, derived from your IP address). On Android it also collects the Google advertising ID, which you can reset or delete in your device's settings; on iOS the advertising identifier (IDFA) is never accessed. We use this solely to understand how the app is used and to improve it, never for advertising, and we do not combine it with data from other companies. <strong>On Android</strong>, analytics is off until you agree in the first-run prompt. <strong>On iOS</strong>, analytics is on from the first launch. On both platforms you can switch it on or off at any time under <em>Account → Usage analytics</em>; switching it off stops collection immediately.</p>
 
 <h2>3. Why we process it (legal bases)</h2>
 <ul>
-  <li><strong>Performance of a contract</strong> (Art. 6(1)(b) GDPR): providing the account, cross-device sync and your subscription.</li>
+  <li><strong>Performance of a contract</strong> (Art. 6(1)(b) GDPR): providing the account, cross-device sync, your subscription and the picture tutor's conversations.</li>
   <li><strong>Consent</strong> (Art. 6(1)(a) GDPR): usage analytics on Android, which runs only after you opt in. Withdrawable at any time; withdrawal doesn't affect prior processing.</li>
   <li><strong>Legitimate interests</strong> (Art. 6(1)(f) GDPR): usage analytics on iOS, where it runs until you switch it off (you can object at any time by doing so); and keeping the service secure and preventing abuse (for example subscription validation).</li>
 </ul>
 
 <h2>4. Service providers (processors)</h2>
 <ul>
-  <li><strong>Google LLC / Google Ireland</strong> — Firebase Authentication, Cloud Firestore, Firebase Analytics, Google Play Billing (<a href="https://policies.google.com/privacy">privacy policy</a>, <a href="https://firebase.google.com/support/privacy">Firebase privacy</a>)</li>
-  <li><strong>Apple Inc. / Apple Distribution International</strong> — App Store in-app purchase processing and receipt validation on iOS (<a href="https://www.apple.com/legal/privacy/">privacy policy</a>)</li>
+  <li><strong>Google LLC / Google Ireland</strong> — Firebase Authentication, Cloud Firestore, Cloud Storage, Cloud Functions and Cloud Text-to-Speech (the picture tutor's server and spoken replies), Firebase Analytics, Google Play Billing (<a href="https://policies.google.com/privacy">privacy policy</a>, <a href="https://firebase.google.com/support/privacy">Firebase privacy</a>)</li>
+  <li><strong>Apple Inc. / Apple Distribution International</strong> — Sign in with Apple, App Store in-app purchase processing and receipt validation on iOS (<a href="https://www.apple.com/legal/privacy/">privacy policy</a>)</li>
   <li><strong>RevenueCat, Inc.</strong> — subscription management and receipt validation (<a href="https://www.revenuecat.com/privacy">privacy policy</a>)</li>
+  <li><strong>OpenAI, L.L.C.</strong> — generating the picture tutor's replies from the text of your answers (<a href="https://openai.com/policies/privacy-policy">privacy policy</a>)</li>
 </ul>
+<p>Speech recognition is performed by your phone's own service (Google on Android, Apple on iOS). It is part of the operating system rather than a processor acting for us, and handles your speech under Google's or Apple's own privacy policy.</p>
 <p>These providers process data on our behalf and may do so on servers outside the EU/EEA (including the United States); transfers are protected by the EU Standard Contractual Clauses and, where applicable, the EU–US Data Privacy Framework.</p>
 
 <h2>5. Sharing</h2>
@@ -68,6 +73,7 @@
 <ul>
   <li>Account and synced data: kept until you delete your account.</li>
   <li>Analytics data: retained by Firebase Analytics for up to 14 months.</li>
+  <li>Picture tutor: the text of your answers is not stored on our servers; the usage counters kept under your user ID are deleted on request; server logs (timing, model, cost; no text) are kept for 30 days. Conversation transcripts live only on your device until you delete your account in the app or uninstall it.</li>
   <li>Purchase records: kept as long as required for accounting and legal obligations.</li>
 </ul>
 
@@ -76,7 +82,7 @@
 <ul>
   <li><strong>By email:</strong> write to <a href="mailto:andriiudodwork@icloud.com?subject=Delete%20my%20DasGo%20account">andriiudodwork@icloud.com</a> from the email address linked to your account with the subject "Delete my DasGo account".</li>
 </ul>
-<p>We will delete your authentication account and your synced data (preferences, energy, statistics, subscription status record) within 30 days. Data that exists only on your device is removed by uninstalling the app. Note that deleting your account does not by itself cancel an active subscription — manage or cancel it where you bought it: on Android in the Play Store under <em>Payments &amp; subscriptions</em>, on iOS in <em>Settings → your name → Subscriptions</em>.</p>
+<p>We will delete your authentication account and your synced data (preferences, energy, statistics, flashcard decks, dialog progress, subscription status record) within 30 days, and on request the picture tutor's usage counters kept under your user ID. Data that exists only on your device is removed by uninstalling the app. Note that deleting your account does not by itself cancel an active subscription — manage or cancel it where you bought it: on Android in the Play Store under <em>Payments &amp; subscriptions</em>, on iOS in <em>Settings → your name → Subscriptions</em>.</p>
 
 <h2>8. Your rights</h2>
 <p>Under the GDPR you have the right of access, rectification, erasure, restriction of processing, data portability and objection, and the right to withdraw consent at any time. To exercise any of these, email <a href="mailto:andriiudodwork@icloud.com">andriiudodwork@icloud.com</a>. You also have the right to lodge a complaint with a supervisory authority — in Austria, the <a href="https://www.dsb.gv.at/">Datenschutzbehörde (DSB)</a>.</p>
